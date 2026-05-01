@@ -21,7 +21,7 @@ services:
 
 networks:
   frontend:
-    driver: bridge
+    ${NETWORK_OPTION:-driver: bridge}
 
 volumes:
   options-sync-data:
