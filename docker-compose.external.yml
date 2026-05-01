@@ -1,0 +1,27 @@
+services:
+  options-sync-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: unless-stopped
+
+    ports:
+      - "${PORT_MAPPING:-${PORT:-8080}:80}"
+
+    environment:
+      BEARER_TOKEN: ${BEARER_TOKEN:-changeme}
+      DATABASE_PATH: /data/options.sqlite
+
+    volumes:
+      - ${VOLUME_PATH:-options-sync-data}:/data
+
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    external: true
+
+volumes:
+  options-sync-data:
