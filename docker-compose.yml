@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
 
     ports:
-      - "${PORT_MAPPING:-8080:80}"
+      - "${PORT_MAPPING:-${PORT:-8080}:80}"
 
     environment:
       BEARER_TOKEN: ${BEARER_TOKEN:-changeme}
