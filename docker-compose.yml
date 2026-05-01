@@ -1,15 +1,27 @@
 services:
   options-sync-api:
-    build: .
-    container_name: options-sync-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+
     restart: unless-stopped
+
     ports:
-      - "8080:80"
+      - "${PORT_MAPPING:-8080:80}"
+
     environment:
-      BEARER_TOKEN: "CHANGE_ME_SUPER_SECRET_BEARER_KEY"
-      DATABASE_PATH: "/data/options.sqlite"
+      BEARER_TOKEN: ${BEARER_TOKEN:-changeme}
+      DATABASE_PATH: /data/options.sqlite
+
     volumes:
-      - options-sync-data:/data
+      - ${VOLUME_PATH:-options-sync-data}:/data
+
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    driver: bridge
 
 volumes:
   options-sync-data:
